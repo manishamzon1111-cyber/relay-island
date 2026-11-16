@@ -4,3 +4,7 @@ __pycache__/
 data/
 testdata/
 .DS_Store
+# Generated local-only browser credentials
+browser-lab/.env
+browser-lab/.env.*
+!browser-lab/.env.example
