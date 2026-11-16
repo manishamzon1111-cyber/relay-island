@@ -18,3 +18,5 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
       - run: python -m unittest discover -s tests -v
+      - name: Validate browser Docker Compose configuration
+        run: RELAY_BROWSER_USER=test123 RELAY_BROWSER_ADMIN=test456 docker compose -f browser-lab/compose.yaml config --quiet
