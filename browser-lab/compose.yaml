@@ -1,0 +1,22 @@
+# Local-Mac-only prototype. DO NOT change 127.0.0.1 to 0.0.0.0.
+# No tablet, LAN or public listener is intentionally provided in this release.
+services:
+  browser:
+    image: ghcr.io/m1k1o/neko/firefox:latest
+    platform: linux/arm64
+    restart: "no"
+    shm_size: "2gb"
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "127.0.0.1:18080:8080/tcp"
+      - "127.0.0.1:52000-52010:52000-52010/udp"
+    environment:
+      NEKO_DESKTOP_SCREEN: "1280x720@30"
+      NEKO_WEBRTC_EPR: "52000-52010"
+      NEKO_WEBRTC_NAT1TO1: "127.0.0.1"
+      NEKO_WEBRTC_ICESERVERS_FRONTEND: "[]"
+      NEKO_MEMBER_MULTIUSER_USER_PASSWORD: "${RELAY_BROWSER_USER:?Generated user password required}"
+      NEKO_MEMBER_MULTIUSER_ADMIN_PASSWORD: "${RELAY_BROWSER_ADMIN:?Generated admin password required}"
+      NEKO_MEMBER_MULTIUSER_USER_PROFILE: '{"name":"Viewer","is_admin":false,"can_login":true,"can_connect":true,"can_watch":true,"can_host":true,"can_share_media":false,"can_access_clipboard":false,"sends_inactive_cursor":false,"can_see_inactive_cursors":false}'
+      NEKO_MEMBER_MULTIUSER_ADMIN_PROFILE: '{"name":"Admin","is_admin":true,"can_login":true,"can_connect":true,"can_watch":true,"can_host":true,"can_share_media":false,"can_access_clipboard":false,"sends_inactive_cursor":false,"can_see_inactive_cursors":false}'
