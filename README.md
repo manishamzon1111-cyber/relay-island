@@ -1,4 +1,4 @@
-# RELAY Island 0.5.2
+# RELAY Island 0.5.4
 
 A lightweight browser-based, Mac-hosted local reader and media player. Designed for an **offline LAN** where an untrusted Android tablet never has a public internet route. It does not provide a firewall, enforce routing, or remove device management.
 
@@ -60,3 +60,21 @@ export RELAY_SEARXNG_URL=https://your-searxng-host.example
 SearXNG public instances frequently disable JSON or rate-limit requests; using a self-hosted, reachable HTTPS instance is more reliable. The tablet never supplies the instance URL. No automatic silent fallback sends your search query to a second provider; choose another source explicitly. Search queries are sent to whichever provider you select **after Mac approval**.
 
 A `failed` request with `network` or `dns` indicates the Mac could not reach the external provider. Switching providers cannot fix a Mac-wide firewall, proxy, DNS, or internet connectivity problem. This build has not been verified against live search engines on your Mac.
+
+## Full website / YouTube browser experiment (Mac only)
+
+The old search results intentionally open in a *text-only article reader*, not a normal website. A new **n.eko / Firefox WebRTC** experiment is in [browser-lab/README.md](browser-lab/README.md). It can render normal websites in a real browser and stream audio/video; Chrome/Android compatibility and YouTube playback have **not been proven** on the target device.
+
+**Do not open this n.eko container to the managed tablet or your LAN.** It listens on Mac loopback only; allowing an untrusted device to control a full internet browser could create an outbound data channel, even if the tablet has no internet gateway. This stage deliberately does **not** change the existing tablet app. No claim of isolation certification.
+
+With Docker Desktop already running on an Apple Silicon Mac:
+
+```sh
+python3 browser-lab/browser_lab.py check
+python3 browser-lab/browser_lab.py start
+# Open http://127.0.0.1:18080 on the Mac
+python3 browser-lab/browser_lab.py stop
+```
+
+Generated login passwords stay in `browser-lab/.env` (ignored by Git, owner-readable only). The launcher does not expose them in Terminal.
+
