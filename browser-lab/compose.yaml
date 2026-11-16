@@ -2,7 +2,7 @@
 # No tablet, LAN or public listener is intentionally provided in this release.
 services:
   browser:
-    image: ghcr.io/m1k1o/neko/firefox:latest
+    image: ghcr.io/m1k1o/neko/firefox:3.1.5
     platform: linux/arm64
     restart: "no"
     shm_size: "2gb"
