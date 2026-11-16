@@ -1,3 +1,11 @@
+## 0.5.4 — Fix live search HTTP response crash
+
+- Fixed `OSError: [Errno 9] Bad file descriptor` after a completed Content-Length HTTP response.
+- A completed Python HTTPResponse can close the socket; the fetch loop now checks for completion before touching it again.
+- Added live local HTTP-server regression tests for Content-Length and connection-close responses.
+- Verified locally: 13 unittest tests pass, including direct reproduction of the original failure before the fix.
+- Live Bing retrieval on the user's Mac remains unverified until the updated server is run there.
+
 ## 0.5.3 — Search-first UI and connection diagnostics
 
 - Replaced the cramped search panel with a responsive three-column search form (tablet layout stacks provider picker below).
