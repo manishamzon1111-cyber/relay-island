@@ -12,6 +12,9 @@ Design rules (all enforced here, never delegated to the caller):
 from __future__ import annotations
 
 import http.client
+import logging
+
+LOG = logging.getLogger('relay_island.fetcher')
 import ipaddress
 import re
 import socket
@@ -145,17 +148,20 @@ class Fetcher:
             else:
                 sock = socket.create_connection((ip, port), timeout=timeout)
         except OSError as exc:
-            raise FetchError('network', 'Could not connect to the website.') from exc
+            LOG.warning('Outbound TCP connection failed to %s:%s: %s: %s', host, port, type(exc).__name__, exc)
+            raise FetchError('network', f'The Mac could not connect to {host}. Check its internet connection or try a different search provider.') from exc
         if scheme == 'https':
             ctx = ssl.create_default_context()
             try:
                 sock = ctx.wrap_socket(sock, server_hostname=host)
             except ssl.SSLError as exc:
                 sock.close()
-                raise FetchError('tls', 'The website’s security certificate could not be verified.') from exc
+                LOG.warning('TLS certificate or handshake failed for %s: %s: %s', host, type(exc).__name__, exc)
+                raise FetchError('tls', f'Secure connection to {host} failed. Check the Mac’s date, VPN, or TLS interception.') from exc
             except OSError as exc:
                 sock.close()
-                raise FetchError('network', 'Secure connection failed.') from exc
+                LOG.warning('TLS network failure for %s: %s: %s', host, type(exc).__name__, exc)
+                raise FetchError('network', f'The Mac lost its secure connection to {host}.') from exc
         return sock
 
     def fetch(self, url: str, *, max_bytes: int, accept: str, allowed_types: tuple[str, ...],
@@ -225,7 +231,8 @@ class Fetcher:
             except (TimeoutError, socket.timeout) as exc:
                 raise FetchError('timeout', 'The website took too long to respond.') from exc
             except (http.client.HTTPException, OSError) as exc:
-                raise FetchError('network', 'The connection to the website failed.') from exc
+                LOG.warning('HTTP response failure for %s: %s: %s', host, type(exc).__name__, exc)
+                raise FetchError('network', f'The Mac could not read the response from {host}. Check the Terminal log for details.') from exc
             finally:
                 try:
                     sock.close()
