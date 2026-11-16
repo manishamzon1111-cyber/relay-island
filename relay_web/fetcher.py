@@ -216,6 +216,10 @@ class Fetcher:
                     left = limit - (time.monotonic() - start)
                     if left <= 0:
                         raise FetchError('timeout', 'The website took too long to respond.')
+                    # A complete Content-Length response closes HTTPResponse's socket.
+                    # Do not call settimeout on it after the final read.
+                    if resp.isclosed():
+                        break
                     sock.settimeout(max(0.5, min(self.timeout, left)))
                     chunk = resp.read(65536)
                     if not chunk:
