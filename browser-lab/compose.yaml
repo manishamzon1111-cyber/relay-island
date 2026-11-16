@@ -16,6 +16,8 @@ services:
       NEKO_WEBRTC_EPR: "52000-52010"
       NEKO_WEBRTC_NAT1TO1: "127.0.0.1"
       NEKO_WEBRTC_ICESERVERS_FRONTEND: "[]"
+      # Local HTTP proof: secure cookies require HTTPS on real LAN deployments.
+      NEKO_SESSION_COOKIE_SECURE: "false"
       NEKO_MEMBER_MULTIUSER_USER_PASSWORD: "${RELAY_BROWSER_USER:?Generated user password required}"
       NEKO_MEMBER_MULTIUSER_ADMIN_PASSWORD: "${RELAY_BROWSER_ADMIN:?Generated admin password required}"
       NEKO_MEMBER_MULTIUSER_USER_PROFILE: '{"name":"Viewer","is_admin":false,"can_login":true,"can_connect":true,"can_watch":true,"can_host":true,"can_share_media":false,"can_access_clipboard":false,"sends_inactive_cursor":false,"can_see_inactive_cursors":false}'
