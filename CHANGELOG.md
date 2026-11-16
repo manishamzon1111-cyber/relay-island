@@ -1,3 +1,13 @@
+## 0.5.3 — Search-first UI and connection diagnostics
+
+- Replaced the cramped search panel with a responsive three-column search form (tablet layout stacks provider picker below).
+- Changed the initial provider selection from DuckDuckGo to Bing RSS for general web search; Wikipedia is optional.
+- Added provider notes directly below search and a retry action after a failed request.
+- Display Mac-side provider hostname on failed searches; log TCP/TLS/HTTP errors to the Mac Terminal for troubleshooting.
+- Corrected the reported application version.
+- Verification: 11 existing automated tests pass and JavaScript syntax validation passes in the development container. This does **not** establish live provider reliability or a successful browser screenshot test.
+- Security: This is **not** a firewall or network-isolation proof. Do not expose the managed tablet to an internet-connected network.
+
 # v0.5.0
 
 - Reconstructed functional Mac backend from supplied partial Claude source.
