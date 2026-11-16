@@ -42,7 +42,7 @@ def main():
         guard.start()
         threading.Thread(target=lan.serve_forever,daemon=True,name='LAN-server').start()
     threading.Thread(target=admin.serve_forever,daemon=True,name='admin-server').start()
-    print('\nRELAY Island 0.5.2 — RUNNING',flush=True)
+    print('\nRELAY Island 0.5.3 — RUNNING',flush=True)
     print(f'Local interface: http://127.0.0.1:{args.port}/',flush=True)
     print(f'Unlock Mac approvals: http://127.0.0.1:{args.port}/admin/enter?key={urllib.parse.quote(app.admin_key)}',flush=True)
     if lan:print(f'Tablet interface: http://{args.lan_host}:{args.port}/',flush=True)
