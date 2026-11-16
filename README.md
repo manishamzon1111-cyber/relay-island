@@ -61,7 +61,11 @@ SearXNG public instances frequently disable JSON or rate-limit requests; using a
 
 A `failed` request with `network` or `dns` indicates the Mac could not reach the external provider. Switching providers cannot fix a Mac-wide firewall, proxy, DNS, or internet connectivity problem. This build has not been verified against live search engines on your Mac.
 
-## Full website / YouTube browser experiment (Mac only)
+## Native full-website viewing (Docker-free)
+
+For Apple Silicon Macs, see [native-stream/README.md](native-stream/README.md). This uses the independent open-source **Lumen** screen-and-audio streamer (ScreenCaptureKit + VideoToolbox) instead of Docker/n.eko. It displays a real browser window and YouTube playback to a local browser viewer with **Mac-controlled navigation only**. It can be started only after the dedicated offline-LAN preflight and still requires real-world network verification. **It is not tablet-controlled browsing or a no-exfiltration guarantee.** No software is auto-installed.
+
+## Earlier Docker browser experiment (optional, not recommended for limited storage)
 
 The old search results intentionally open in a *text-only article reader*, not a normal website. A new **n.eko / Firefox WebRTC** experiment is in [browser-lab/README.md](browser-lab/README.md). It can render normal websites in a real browser and stream audio/video; Chrome/Android compatibility and YouTube playback have **not been proven** on the target device.
 
